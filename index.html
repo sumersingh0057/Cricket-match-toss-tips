@@ -4,66 +4,65 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lifetime Free Tips</title>
+  <link href="https://fonts.googleapis.com/css2?family=Trade+Winds&display=swap" rel="stylesheet">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Trade+Winds&display=swap');
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body, html {
+      width: 100%;
+      height: 100%;
+      font-family: Arial, sans-serif;
+    }
 
     body {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
       background: url("background.jpg") no-repeat center center/cover;
-      color: white;
-      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     .overlay {
       background: rgba(0,0,0,0.55);
+      width: 100%;
+      max-width: 480px; /* mobile-friendly width */
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      justify-content: flex-start;
+      justify-content: center;
       align-items: center;
-      padding: 15px;
+      padding: 20px;
+      text-align: center;
     }
 
-    /* Heading with aqua + lime glow stroke */
+    /* Heading */
     .title {
-      font-size: 42px;
-      font-weight: 900;
+      font-size: clamp(28px, 6vw, 42px);
       font-family: 'Trade Winds', cursive;
       color: aqua;
       text-transform: uppercase;
       letter-spacing: 1px;
       -webkit-text-stroke: 2px lime;
       animation: headingGlow 1.5s infinite alternate;
-      margin-top: 10px;
-      white-space: nowrap; /* ek hi line me rakhega */
+      white-space: nowrap;
+      margin-bottom: 15px;
     }
 
     @keyframes headingGlow {
-      0% {
-        text-shadow: 
-          0 0 5px lime,
-          0 0 10px lime,
-          0 0 15px aqua;
-      }
-      100% {
-        text-shadow: 
-          0 0 15px lime,
-          0 0 25px aqua,
-          0 0 35px lime;
-      }
+      0% { text-shadow: 0 0 5px lime, 0 0 10px lime, 0 0 15px aqua; }
+      100% { text-shadow: 0 0 15px lime, 0 0 25px aqua, 0 0 35px lime; }
     }
 
     .logo {
-      width: 95px;
-      height: 95px;
-      margin: 12px auto;
+      width: 100px;
+      height: 100px;
+      margin: 15px 0;
       border-radius: 50%;
       background: #fff;
       overflow: hidden;
       border: 4px solid #ff4444;
+      flex-shrink: 0;
     }
+
     .logo img {
       width: 100%;
       height: 100%;
@@ -74,17 +73,18 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      margin: 8px auto;
-      padding: 10px 22px;
+      margin: 10px auto;
+      padding: 12px 25px;
       background: linear-gradient(90deg,#d4e0ff,#a7f5ff);
       border-radius: 30px;
       font-weight: bold;
       color: #111;
       text-decoration: none;
-      font-size: 15px;
-      box-shadow: 0 0 10px red, 0 0 20px orange, 0 0 30px red;
+      font-size: 16px;
+      border: 2px solid #ff4500;
       animation: buttonGlow 1.5s infinite alternate, buttonPop 1.2s infinite;
     }
+
     .cta span { margin-left: 6px; }
 
     @keyframes buttonGlow {
@@ -98,13 +98,14 @@
     }
 
     .desc {
-      margin: 15px 0;
-      font-size: 17px;
-      line-height: 1.5em;
+      margin: 20px 0;
+      font-size: 16px;
       font-weight: bold;
       color: #fff;
       text-shadow: 1px 1px 3px #000;
+      line-height: 1.5;
     }
+
     .highlight { color: #ffcc00; }
 
     .exp {
@@ -116,19 +117,13 @@
     }
 
     .timer {
-      font-size: 75px;
+      font-size: clamp(50px, 10vw, 75px);
       font-weight: 900;
       font-family: monospace;
-      margin: 10px 0 15px 0;
+      margin: 15px 0;
       color: #fff;
-      text-shadow: 
-        2px 2px 4px #000,
-        0 0 8px #ff0000,
-        0 0 15px #00ff00,
-        0 0 20px #0000ff;
+      text-shadow: 2px 2px 4px #000, 0 0 8px #ff0000, 0 0 15px #00ff00, 0 0 20px #0000ff;
     }
-
-    .bottom-btn { margin-top: 5px; }
   </style>
 </head>
 <body>
@@ -155,11 +150,9 @@
 
     <div id="timer" class="timer">00:59</div>
 
-    <div class="bottom-btn">
-      <a href="https://t.me/yourchannel" target="_blank" class="cta">
-        ✈ <span>JOIN TELEGRAM CHANNEL</span>
-      </a>
-    </div>
+    <a href="https://t.me/yourchannel" target="_blank" class="cta">
+      ✈ <span>JOIN TELEGRAM CHANNEL</span>
+    </a>
   </div>
 
   <script>
@@ -169,20 +162,19 @@
     function formatTime(s) {
       const mm = Math.floor(s / 60);
       const ss = s % 60;
-      return String(mm).padStart(2, '0') + ':' + String(ss).padStart(2, '0');
+      return String(mm).padStart(2,'0') + ':' + String(ss).padStart(2,'0');
     }
 
     el.textContent = formatTime(secondsLeft);
 
-    const intervalId = setInterval(() => {
-      if (secondsLeft <= 0) {
-        clearInterval(intervalId);
-        el.textContent = "00:00";
+    setInterval(() => {
+      if(secondsLeft <=0){
+        el.textContent="00:00";
         return;
       }
       secondsLeft--;
       el.textContent = formatTime(secondsLeft);
-    }, 1000);
+    },1000);
   </script>
 </body>
 </html>
